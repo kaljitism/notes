@@ -1,0 +1,59 @@
+{
+  "moduleName": "notes",
+  "tables": [
+    {
+      "name": "note",
+      "dartName": "Note",
+      "module": "notes",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "columnType": 2,
+          "isNullable": false,
+          "columnDefault": "nextval('note_id_seq'::regclass)",
+          "dartType": "int?"
+        },
+        {
+          "name": "text",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "name": "created",
+          "columnType": 4,
+          "isNullable": false,
+          "dartType": "DateTime"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [
+        {
+          "indexName": "note_pkey",
+          "elements": [
+            {
+              "type": 0,
+              "definition": "id"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": true
+        }
+      ],
+      "managed": true
+    }
+  ],
+  "installedModules": [
+    {
+      "module": "serverpod",
+      "version": "20240115074235544"
+    },
+    {
+      "module": "notes",
+      "version": "20240330122447757"
+    }
+  ],
+  "migrationApiVersion": 1
+}

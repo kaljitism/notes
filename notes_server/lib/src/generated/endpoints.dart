@@ -10,6 +10,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/example_endpoint.dart' as _i2;
+import '../endpoints/notes_endpoint.dart' as _i3;
+import 'package:notes_server/src/generated/note.dart' as _i4;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -20,7 +22,13 @@ class Endpoints extends _i1.EndpointDispatch {
           server,
           'example',
           null,
-        )
+        ),
+      'notes': _i3.NotesEndpoint()
+        ..initialize(
+          server,
+          'notes',
+          null,
+        ),
     };
     connectors['example'] = _i1.EndpointConnector(
       name: 'example',
@@ -44,6 +52,57 @@ class Endpoints extends _i1.EndpointDispatch {
             params['name'],
           ),
         )
+      },
+    );
+    connectors['notes'] = _i1.EndpointConnector(
+      name: 'notes',
+      endpoint: endpoints['notes']!,
+      methodConnectors: {
+        'createNote': _i1.MethodConnector(
+          name: 'createNote',
+          params: {
+            'note': _i1.ParameterDescription(
+              name: 'note',
+              type: _i1.getType<_i4.Note>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['notes'] as _i3.NotesEndpoint).createNote(
+            session,
+            params['note'],
+          ),
+        ),
+        'deleteNote': _i1.MethodConnector(
+          name: 'deleteNote',
+          params: {
+            'note': _i1.ParameterDescription(
+              name: 'note',
+              type: _i1.getType<_i4.Note>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['notes'] as _i3.NotesEndpoint).deleteNote(
+            session,
+            params['note'],
+          ),
+        ),
+        'getAllNotes': _i1.MethodConnector(
+          name: 'getAllNotes',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['notes'] as _i3.NotesEndpoint).getAllNotes(session),
+        ),
       },
     );
   }
