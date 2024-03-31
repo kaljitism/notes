@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:notes_client/notes_client.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
+import 'note_dialog.dart';
+
 // Sets up a singleton client object that can be used to talk to the server from
 // anywhere in our app. The client is generated from your server code.
 // The client is set up to connect to a Serverpod running on a local server on
@@ -42,7 +44,7 @@ class MyHomePageState extends State<MyHomePage> {
   List<Note>? _notes;
   Exception? connectionException;
 
-  Future<void> _createNote(Note note) async {
+  Future<void> _createNote(note) async {
     try {
       await client.notes.createNote(note);
       await _fetchNotes();
@@ -88,9 +90,27 @@ class MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(_notes![index].text),
+                  subtitle: Text(_notes![index].created.toString()),
                 );
               },
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showNoteDialog(
+            context: context,
+            onSaved: (value) {
+              var note = Note(
+                text: value,
+                created: DateTime.now(),
+              );
+              _notes!.add(note);
+              _createNote(note);
+            },
+          );
+        },
+        tooltip: 'Add Note',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
