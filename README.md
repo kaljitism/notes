@@ -1,5 +1,7 @@
 ## Full Stack Dart Monolith 
 
+https://github.com/kaljitism/notes/assets/52685389/b5c137c6-094e-4b47-b2a8-9af8e294cd4f
+
 Notes is an example and proof of concept for a Full Stack Dart Application. 
 
 It has used Flutter for Frontend and Serverpod for the backend. 
@@ -25,9 +27,3 @@ Application demonstrates
   4. _deleteNote  
 9. Error Handling
 10. UI Updates
-
-Following is the Frontend:
-
-https://github.com/kaljitism/notes/assets/52685389/b5c137c6-094e-4b47-b2a8-9af8e294cd4f
-
-
