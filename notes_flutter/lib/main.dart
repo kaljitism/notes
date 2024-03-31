@@ -39,13 +39,58 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  List<Note>? _notes;
+  Exception? connectionException;
+
+  Future<void> _createNote(Note note) async {
+    try {
+      await client.notes.createNote(note);
+      await _fetchNotes();
+    } catch (e) {
+      _connectionFailed(e);
+    }
+  }
+
+  Future<void> _fetchNotes() async {
+    try {
+      final notes = await client.notes.getAllNotes();
+      setState(() {
+        _notes = notes;
+      });
+    } catch (e) {
+      _connectionFailed(e);
+    }
+  }
+
+  void _connectionFailed(dynamic error) {
+    setState(() {
+      _notes = null;
+      connectionException = error;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchNotes();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container(),
+      body: _notes == null
+          ? Container()
+          : ListView.builder(
+              itemCount: _notes!.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(_notes![index].text),
+                );
+              },
+            ),
     );
   }
 }
