@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_client/notes_client.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
-import 'note_dialog.dart';
+import 'home_screen.dart';
 
 // Sets up a singleton client object that can be used to talk to the server from
 // anywhere in our app. The client is generated from your server code.
@@ -23,94 +23,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Notes',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark(),
       home: const MyHomePage(title: 'Notes'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  MyHomePageState createState() => MyHomePageState();
-}
-
-class MyHomePageState extends State<MyHomePage> {
-  List<Note>? _notes;
-  Exception? connectionException;
-
-  Future<void> _createNote(note) async {
-    try {
-      await client.notes.createNote(note);
-      await _fetchNotes();
-    } catch (e) {
-      _connectionFailed(e);
-    }
-  }
-
-  Future<void> _fetchNotes() async {
-    try {
-      final notes = await client.notes.getAllNotes();
-      setState(() {
-        _notes = notes;
-      });
-    } catch (e) {
-      _connectionFailed(e);
-    }
-  }
-
-  void _connectionFailed(dynamic error) {
-    setState(() {
-      _notes = null;
-      connectionException = error;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchNotes();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: _notes == null
-          ? Container()
-          : ListView.builder(
-              itemCount: _notes!.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_notes![index].text),
-                  subtitle: Text(_notes![index].created.toString()),
-                );
-              },
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showNoteDialog(
-            context: context,
-            onSaved: (value) {
-              var note = Note(
-                text: value,
-                created: DateTime.now(),
-              );
-              _notes!.add(note);
-              _createNote(note);
-            },
-          );
-        },
-        tooltip: 'Add Note',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

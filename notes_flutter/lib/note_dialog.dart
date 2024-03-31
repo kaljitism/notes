@@ -63,12 +63,24 @@ class NoteDialogState extends State<NoteDialog> {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                widget.onSaved(_controller.text);
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel'),
+                ),
+                const SizedBox(width: 32),
+                ElevatedButton(
+                  onPressed: () {
+                    widget.onSaved(_controller.text);
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Save'),
+                ),
+              ],
             ),
           ],
         ),
