@@ -38,7 +38,7 @@ class MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _editNotes(note) async {
+  Future<void> _editNote(note) async {
     try {
       await client.notes.updateNote(note);
       await _fetchNotes();
@@ -47,7 +47,7 @@ class MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _deleteNotes(note) async {
+  Future<void> _deleteNote(note) async {
     try {
       await client.notes.deleteNote(note);
       await _fetchNotes();
@@ -96,7 +96,7 @@ class MyHomePageState extends State<MyHomePage> {
                           id: _notes![index].id,
                         );
                         _notes![index] = note;
-                        _editNotes(note);
+                        _editNote(note);
                       },
                     );
                   },
@@ -105,7 +105,7 @@ class MyHomePageState extends State<MyHomePage> {
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      _deleteNotes(_notes![index]);
+                      _deleteNote(_notes![index]);
                     },
                   ),
                 );
