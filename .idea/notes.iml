@@ -24,6 +24,11 @@
       <excludeFolder url="file://$MODULE_DIR$/notes_server/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/notes_server/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/notes_server/build" />
+      <excludeFolder url="file://$MODULE_DIR$/notes_flutter/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/notes_flutter/android/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/notes_flutter/linux/flutter/ephemeral" />
+      <excludeFolder url="file://$MODULE_DIR$/notes_flutter/macos/Flutter/ephemeral" />
+      <excludeFolder url="file://$MODULE_DIR$/notes_flutter/windows/flutter/ephemeral" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

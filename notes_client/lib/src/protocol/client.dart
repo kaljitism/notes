@@ -14,20 +14,6 @@ import 'package:notes_client/src/protocol/note.dart' as _i3;
 import 'protocol.dart' as _i4;
 
 /// {@category Endpoint}
-class EndpointExample extends _i1.EndpointRef {
-  EndpointExample(_i1.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'example';
-
-  _i2.Future<String> hello(String name) => caller.callServerEndpoint<String>(
-        'example',
-        'hello',
-        {'name': name},
-      );
-}
-
-/// {@category Endpoint}
 class EndpointNotes extends _i1.EndpointRef {
   EndpointNotes(_i1.EndpointCaller caller) : super(caller);
 
@@ -52,6 +38,12 @@ class EndpointNotes extends _i1.EndpointRef {
         'getAllNotes',
         {},
       );
+
+  _i2.Future<void> updateNote(_i3.Note note) => caller.callServerEndpoint<void>(
+        'notes',
+        'updateNote',
+        {'note': note},
+      );
 }
 
 class Client extends _i1.ServerpodClient {
@@ -69,19 +61,13 @@ class Client extends _i1.ServerpodClient {
           streamingConnectionTimeout: streamingConnectionTimeout,
           connectionTimeout: connectionTimeout,
         ) {
-    example = EndpointExample(this);
     notes = EndpointNotes(this);
   }
-
-  late final EndpointExample example;
 
   late final EndpointNotes notes;
 
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {
-        'example': example,
-        'notes': notes,
-      };
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {'notes': notes};
 
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};

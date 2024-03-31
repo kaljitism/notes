@@ -17,4 +17,8 @@ class NotesEndpoint extends Endpoint {
       orderBy: (t) => t.id,
     );
   }
+
+  Future<void> updateNote(Session session, Note note) async {
+    await Note.db.updateRow(session, note);
+  }
 }

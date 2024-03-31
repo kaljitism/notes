@@ -38,6 +38,15 @@ class MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future<void> _editNotes(note) async {
+    try {
+      await client.notes.updateNote(note);
+      await _fetchNotes();
+    } catch (e) {
+      _connectionFailed(e);
+    }
+  }
+
   Future<void> _deleteNotes(note) async {
     try {
       await client.notes.deleteNote(note);
@@ -76,6 +85,21 @@ class MyHomePageState extends State<MyHomePage> {
               itemCount: _notes!.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () {
+                    showNoteDialog(
+                      context: context,
+                      text: _notes![index].text,
+                      onSaved: (value) {
+                        var note = Note(
+                          text: value,
+                          created: DateTime.now(),
+                          id: _notes![index].id,
+                        );
+                        _notes![index] = note;
+                        _editNotes(note);
+                      },
+                    );
+                  },
                   title: Text(_notes![index].text),
                   subtitle: Text(_notes![index].created.toString()),
                   trailing: IconButton(
